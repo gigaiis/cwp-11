@@ -2,12 +2,14 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const routes = require('./routes/index.js');
+const films = require('./routes/films.js');
 const actors = require('./routes/actors.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', routes);
+app.use('/api/films', films);
 app.use('/api/actors', actors);
 
 app.listen(3000, () => {
