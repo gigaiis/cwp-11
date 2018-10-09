@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 let films = require('../top250.json');
+const logger = require('./logs/log.js');
 
 router.get('/readall', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	res.send(films.sort((a, b) => { return a.position - b.position; }));    
 });
 
 router.get('/read', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	if (!req.query.id) res.send({'error': '\"id\" arg not found'});
 	else {
 		let r = films.find(film => film.id == req.query.id);
@@ -16,8 +19,8 @@ router.get('/read', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	req = req.body;
-	// console.log(req);
 	if (!req.title || !req.rating || !req.year || !req.budget || !req.gross || !req.poster || !req.position)
 		res.json({'error': 'one or more args not found'});
 	else {
@@ -64,6 +67,7 @@ router.post('/create', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	req = req.body;
 	if (!req.id) res.json({'error': '\"id\" arg not found'});
 	else {
@@ -99,6 +103,7 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/delete', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	req = req.body;
 	if (!req.id) res.json({'error': '\"id\" arg not found'});
 	else {

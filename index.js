@@ -5,6 +5,7 @@ const routes = require('./routes/index.js');
 const films = require('./routes/films.js');
 const actors = require('./routes/actors.js');
 const images = require('./routes/images/images.js');
+const logs = require('./routes/logs/log.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,7 +14,7 @@ app.use('/', routes);
 app.use('/api/films', films);
 app.use('/api/actors', actors);
 app.use('/images/actors', images);
-
+app.use('/api/log', logs.router);
 
 
 app.listen(3000, () => {

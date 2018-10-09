@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 let actors = require('../actors.json');
+const logger = require('./logs/log.js');
 
 router.get('/readall', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	res.send(actors.sort((a, b) => { return a.liked - b.liked; }).reverse());    
 });
 
 router.get('/read', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	if (!req.query.id) res.send({'error': '\"id\" arg not found'});
 	else {
 		let r = actors.find(actors => actors.id == req.query.id);
@@ -16,6 +19,7 @@ router.get('/read', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	req = req.body;
 	if (!req.name || !req.birth || !req.films || !req.liked || !req.photo)
 		res.json({'error': 'one or more args not found'});
@@ -35,6 +39,7 @@ router.post('/create', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	req = req.body;
 	if (!req.id) res.json({'error': '\"id\" arg not found'});
 	else {
@@ -56,6 +61,7 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/delete', (req, res) => {
+	logger.log(`${req.url.toString()}\n`);
 	req = req.body;
 	if (!req.id) res.json({'error': '\"id\" arg not found'});
 	else {
